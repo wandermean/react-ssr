@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "./components/Header/";
 import { renderRoutes } from "react-router-config";
-import { getHeaderInfo } from "./components/Header/store/action";
+import { getHeaderInfo } from "./components/Header/store/actions";
 
 const App = (props) => {
   return (
@@ -13,7 +13,7 @@ const App = (props) => {
 };
 
 App.loadData = store => {
-  store.dispatch(getHeaderInfo());
+  return store.dispatch(getHeaderInfo());
 }
 
 export default App;

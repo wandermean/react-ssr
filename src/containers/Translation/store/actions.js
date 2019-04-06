@@ -5,12 +5,12 @@ const changeList = list => ({
   list
 });
 
-export const getHomeList = () => {
+export const getTranslationList = () => {
   return (dispatch,getState,axiosInstance) => {
     return axiosInstance
-      .get('/api/news.json')
+      .get('/api/translations.json')
       .then(res => {
-        const list = res.data.data;
+        const list = res.data.success ? res.data.data : []
         dispatch(changeList(list));
       });
   };

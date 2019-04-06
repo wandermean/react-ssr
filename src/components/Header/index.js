@@ -1,24 +1,43 @@
-import React, { Fragment } from "react";
+import React, { Fragment, PureComponent } from "react";
 import { Link } from "react-router-dom";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
+import { actions } from "./store/";
 
-const Header = (props) => {
-  return (
-    <div>
-      <Link to="/">首页</Link>
-      <br />
-      {props.login ? <Fragment>
-        <Link to="/login">翻译列表</Link>
+class Header extends PureComponent {
+  render() {
+    const { login, handleLogin, handleLogout } = this.props;
+    return (
+      <div>
+        <Link to="/">首页</Link>
         <br />
-        <Link to="/login">退出</Link>
-      </Fragment> : <Link to="/login">登陆</Link>
-      }
-    </div>
-  );
-};
+        {login ? (
+          <Fragment>
+            <Link to="/translation">翻译列表</Link>
+            <br />
+            <div onClick={handleLogout}>退出</div>
+          </Fragment>
+        ) : (
+          <div onClick={handleLogin}>登陆</div>
+        )}
+      </div>
+    );
+  }
+}
 
 const mapStateToProps = state => ({
   login: state.header.login
 });
 
-export default connect(mapStateToProps, null)(Header);
+const mapDispatchToProps = dispatch => ({
+  handleLogin() {
+    dispatch(actions.login());
+  },
+  handleLogout() {
+    dispatch(actions.logout());
+  }
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header);

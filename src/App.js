@@ -1,6 +1,7 @@
 import React from "react";
-import Header from "./components/Header";
+import Header from "./components/Header/";
 import { renderRoutes } from "react-router-config";
+import { getHeaderInfo } from "./components/Header/store/action";
 
 const App = (props) => {
   return (
@@ -10,5 +11,9 @@ const App = (props) => {
     </div>
   );
 };
+
+App.loadData = store => {
+  store.dispatch(getHeaderInfo());
+}
 
 export default App;

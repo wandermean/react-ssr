@@ -4,8 +4,6 @@ import { render } from "./utils";
 import { getStore } from "../store";
 import routes from "../Routes";
 import { matchRoutes } from "react-router-config";
-import { resolve } from "url";
-import { rejects } from "assert";
 
 const app = express();
 app.use(express.static("public"));
@@ -27,8 +25,9 @@ app.get("*", function(req, res) {
   //让matchRoutes里面所有的组件对应的loadData方法执行一次
   matchedRoutes.forEach(item => {
     if (item.route.loadData) {
-      const promise = new Promise((resolve) => {
-        item.route.loadData(store)
+      const promise = new Promise(resolve => {
+        item.route
+          .loadData(store)
           .then(resolve)
           .catch(resolve);
       });
@@ -36,7 +35,7 @@ app.get("*", function(req, res) {
     }
   });
   Promise.all(promises).then(() => {
-    const context = {};
+    const context = { css: [] };
     const html = render(store, routes, req, context);
     if (context.action === "REPLACE") {
       res.redirect(301, context.url);

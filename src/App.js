@@ -3,10 +3,10 @@ import Header from "./components/Header/";
 import { renderRoutes } from "react-router-config";
 import { getHeaderInfo } from "./components/Header/store/actions";
 
-const App = (props) => {
+const App = props => {
   return (
     <div>
-      <Header />
+      <Header staticContext={props.staticContext} />
       {renderRoutes(props.route.routes)}
     </div>
   );
@@ -14,6 +14,6 @@ const App = (props) => {
 
 App.loadData = store => {
   return store.dispatch(getHeaderInfo());
-}
+};
 
 export default App;
